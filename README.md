@@ -138,7 +138,12 @@ total 397756
 
 # Now copy the output so that it's available to be served over HTTP
 mkdir -p /vagrant/deploy/state/webroot/misc/osie/current/ubuntu_18_04
-cp ./work/ubuntu_18_04-c3.small.x86/*.tar.gz /vagrant/deploy/state/webroot/misc/osie/current/ubuntu_18_04/
+
+# Make the individual archives:
+./tools/archive-ubuntu ./ubuntu_18_04-c3.small.x86-image.tar.gz ./
+
+mv ubuntu_18_04-c3.small.x86-image.tar.gz images.tar.gz
+cp ./*.tar.gz /vagrant/deploy/state/webroot/misc/osie/current/ubuntu_18_04/
 ```
 
 #### Internal Equinix use only
