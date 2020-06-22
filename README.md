@@ -68,10 +68,16 @@ A Docker build will be run to reproduce for tar.gz files which need to be copied
 The initial Terraform uses the c3.small.x86 worker type, so use the following parameters to configure Ubuntu 18.04.
 
 ```bash
+# Elevate to root privileges
+
+sudo -i
+
+#
+
 apt update && apt install -qy git git-lfs fakeroot jq
-git clone https://github.com/packethost/packet-images
-cd packet-images
-git-lts install
+git clone https://github.com/packethost/packet-images && \
+  cd packet-images && \
+  git-lts install
 
 # This will take a few minutes
 ./tools/build.sh -d ubuntu_18_04 -p c3.small.x86 -a x86_64 -b ubuntu_18_04-c3.small.x86
