@@ -137,8 +137,8 @@ total 397756
 -rw-r--r-- 1 root root  65386698 May 19 08:54 modules.tar.gz                                    
 
 # Now copy the output so that it's available to be served over HTTP
-mkdir -p /usr/share/nginx/misc/osie/current/ubuntu_18_04
-cp ./work/ubuntu_18_04-c3.small.x86/*.tar.gz /usr/share/nginx/misc/osie/current/ubuntu_18_04/
+mkdir -p /vagrant/deploy/state/webroot/misc/osie/current/ubuntu_18_04
+cp ./work/ubuntu_18_04-c3.small.x86/*.tar.gz /vagrant/deploy/state/webroot/misc/osie/current/ubuntu_18_04/
 ```
 
 #### Internal Equinix use only
