@@ -105,7 +105,11 @@ Now run this to build the image:
 ```
 # This will take a few minutes
 ./tools/build.sh -d ubuntu_18_04 -p c3.small.x86 -a x86_64 -b ubuntu_18_04-c3.small.x86
+```
 
+Take note that users of Vagrant will find the Nginx root directory available at `/usr/share/nginx` instead of `/var/tinkerbell/nginx`.
+
+```
 # Now copy the output so that it's available to be served over HTTP
 mkdir -p /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04
 cp *.tar.gz /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04/
