@@ -90,8 +90,7 @@ total 397756
 -rw-r--r-- 1 root root  65386698 May 19 08:54 modules.tar.gz                                    
 ```
 
-Alternatively run:
-
+Internal Equinix users can run, however this is not recommended for general use.
 
 ```bash
 # 1. git-lfs
