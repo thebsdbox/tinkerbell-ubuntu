@@ -174,6 +174,8 @@ docker save custom-ubuntu-16 > custom-ubuntu-16.tar
 
 2. Use `vim` to modify the `generate.sh` file to create the hardware.json file for your baremetal server
 
+For Vagrant users the worker machine's MAC address is `08:00:27:00:00:00:01`
+
 ```bash
 #!/bin/bash
 
