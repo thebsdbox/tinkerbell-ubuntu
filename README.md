@@ -77,8 +77,32 @@ sudo -i
 apt update && apt install -qy git git-lfs fakeroot jq
 git clone https://github.com/packethost/packet-images && \
   cd packet-images && \
-  git-lts install
+  git-lfs install
+  
+```
 
+Optional step if using Vagrant instead of Packet's infrastructure:
+
+Edit the `./tools/get-ubuntu-image` file with nano or vim and add `:80` to the `+gpg --keyserver` line.
+
+```
+diff --git a/tools/get-ubuntu-image b/tools/get-ubuntu-image
+index cd983e031..40d4a6757 100755
+--- a/tools/get-ubuntu-image
++++ b/tools/get-ubuntu-image
+@@ -25,7 +25,7 @@ path="http://cdimage.ubuntu.com/ubuntu-base/releases/$version/release"
+ file=ubuntu-base-$fullversion-base-$arch.tar.gz
+ 
+ echo "Fetching keys"
+-gpg --keyserver hkp://ha.pool.sks-keyservers.net --recv-keys \
++gpg --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys \
+        843938DF228D22F7B3742BC0D94AA3F0EFE21092 \
+        C5986B4F1257FFA86632CBA746181433FBB75451
+```
+
+Now run this to build the image:
+
+```
 # This will take a few minutes
 ./tools/build.sh -d ubuntu_18_04 -p c3.small.x86 -a x86_64 -b ubuntu_18_04-c3.small.x86
 
