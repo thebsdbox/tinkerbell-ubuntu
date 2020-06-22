@@ -107,13 +107,9 @@ Now run this to build the image:
 ./tools/build.sh -d ubuntu_18_04 -p c3.small.x86 -a x86_64 -b ubuntu_18_04-c3.small.x86
 ```
 
-Take note that users of Vagrant will find the Nginx root directory available at `/usr/share/nginx` instead of `/var/tinkerbell/nginx`.
+### Deploy images
 
-```
-# Now copy the output so that it's available to be served over HTTP
-mkdir -p /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04
-cp *.tar.gz /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04/
-```
+#### Packet users
 
 ```bash
 # ls -l /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04/
@@ -122,7 +118,30 @@ total 397756
 -rw-r--r-- 1 root root  25380938 May 19 08:54 initrd.tar.gz                                     
 -rw-r--r-- 1 root root   7896480 May 19 08:54 kernel.tar.gz                                     
 -rw-r--r-- 1 root root  65386698 May 19 08:54 modules.tar.gz                                    
+
+# Now copy the output so that it's available to be served over HTTP
+mkdir -p /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04
+cp *.tar.gz /var/tinkerbell/nginx/misc/osie/current/ubuntu_18_04/
 ```
+
+#### Vagrant users
+
+Take note that users of Vagrant will find the Nginx root directory available at `/usr/share/nginx` instead of `/var/tinkerbell/nginx`.
+
+```bash
+# ls -l ./work/ubuntu_18_04-c3.small.x86/
+total 397756                                                                                    
+-rw-r--r-- 1 root root 278481368 May 19 08:54 image.tar.gz                                      
+-rw-r--r-- 1 root root  25380938 May 19 08:54 initrd.tar.gz                                     
+-rw-r--r-- 1 root root   7896480 May 19 08:54 kernel.tar.gz                                     
+-rw-r--r-- 1 root root  65386698 May 19 08:54 modules.tar.gz                                    
+
+# Now copy the output so that it's available to be served over HTTP
+mkdir -p /usr/share/nginx/misc/osie/current/ubuntu_18_04
+cp ./work/ubuntu_18_04-c3.small.x86/*.tar.gz /usr/share/nginx/misc/osie/current/ubuntu_18_04/
+```
+
+#### Internal Equinix use only
 
 Internal Equinix users can run, however this is not recommended for general use.
 
