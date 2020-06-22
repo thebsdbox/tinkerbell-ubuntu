@@ -227,9 +227,12 @@ tink workflow create -t "$TEMPLATE_ID" -r '{"device_1": "'$MAC'"}'
 
 ### Reboot worker
 
-Reboot worker node will trigger workflow starts and you can monitoring the workflow events
+For Packet and on-premises reboot the worker node. This will trigger workflow and you can monitor it using the `tink workflow events` command.
+
+For Vagrant users, run `vagrant up worker` instead.
+
 ```
-/tmp #  tink workflow events  f588090f-e64b-47e9-b8d0-a3eed1dc5439
+/tmp #  tink workflow events f588090f-e64b-47e9-b8d0-a3eed1dc5439
 +--------------------------------------+-----------------+-----------------+----------------+---------------------------------+--------------------+
 | WORKER ID                            | TASK NAME       | ACTION NAME     | EXECUTION TIME | MESSAGE                         |      ACTION STATUS |
 +--------------------------------------+-----------------+-----------------+----------------+---------------------------------+--------------------+
@@ -246,15 +249,41 @@ Reboot worker node will trigger workflow starts and you can monitoring the workf
 
 Important note: if you need to re-run the provisioning workflow, you need to run `tink workflow create` again.
 
+Vagrant users will want to open the VirtualBox app and increase the Display scaling size to 300% if they are using a 4k or Retina display.
+
+### Did something go wrong?
+
+If anything appears to go wrong, you can log into the OSIE environment which was netbooted.
+
+* Login with `root` (no password)
+* Run `docker ps -a` to find the exited Docker container for the Tinkerbell worker
+* Run `docker logs CONTAINER_ID` where CONTAINER_ID is the whole name, or a few characters from the container ID
+
+Or in a single command: `docker logs $(docker ps -qa|head -n1)`
+
+Once you've determined the error, create a new workflow again with `tink workflow create` and reboot the worker.
+
+If you're using Vagrant, for the time being you will need to run: `vagrant destroy worker --force && vagrant up worker`.
+
 ### Change the boot order
 
 You now need to stop the machine from netbooting.
+
+#### Packet
 
 Go to the Packet dashboard and click "Server Actions" -> "Disable Always PXE boot". This setting can be toggled as required, or if you need to reprovision a machine.
 
 Now reboot the worker machine, and it should show GRUB before booting Ubuntu.
 
-The username and password are both `ubuntu` and this must be changed on first logon. To change or to remove the password edit `./05-cloud-init/cloud-init.sh`.
+#### On-premises / at-home or with Vagrant
+
+Now reboot the worker machine, and it should show GRUB before booting Ubuntu. Hit `e` for edit, and remove the text `console=ttyS0, 115200` and hit the key to continue booting (F10)
+
+If you do not do this, then you will not be able to see the computer boot up and you won't be able to log in to `tty0` through VirtualBox.
+
+### Login in for the first time
+
+The username and password are both `ubuntu` and this must be changed on first logon. To change the initial password or to remove the default password, you can edit `./05-cloud-init/cloud-init.sh` and run `./create-images.sh` again, then re-provision the host.
 
 You can connect with the packet SOS ssh console or over SSH from the worker, the IP should be 192.168.1.5.
 
@@ -270,8 +299,8 @@ Please direct queries to #tinkerbell on [Packet's Slack channel](https://slack.p
 
 This work is derived [from a sample by Packet and Infracloud](https://github.com/tinkerbell/tink/tree/first-good-workflow/workflow-samples/ubuntu)
 
+* **Alex Ellis** - Fixed networking and other bugs, user experience & README. Steps for Vagrant.
 * **Xin Wang** - *Initial set of fixes and adding cloud-init* - [tink-workflow](https://github.com/wangxin311/tink-workflow)
-* **Alex Ellis** - Fixed networking and other bugs, user experience & README
 
 License: Apache 2.0
 
