@@ -9,7 +9,7 @@ With this step-by-step guide, you have everything you need to provision a bare-m
 1. Get two machine, one is provisioner which it could be VM, the other one if the bare metal server you'd like to be 
 provisioned by tinkerbell, here we call it worker node.
 
-[Use the Tinkerbell Terraform module to setup a single provisioner and worker machine](https://tinkerbell.org/setup/packet/)
+[Use the Tinkerbell Terraform module to setup a single provisioner and worker machine](https://tinkerbell.org/setup/packet-with-terraform/)
 
 You will need a Packet account and a personal user access token, not a project-level token.
 
