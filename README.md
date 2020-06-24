@@ -177,7 +177,7 @@ docker save custom-ubuntu-16 > custom-ubuntu-16.tar
 
 1. Download this repo to your provisioner
 
-2. Use `vim` to modify the `generate.sh` file to create the hardware.json file for your baremetal server
+2. Use `vim` to modify the `generate.sh` file to create the `hw1.json` file for your baremetal server
 
 For Vagrant users the worker machine's MAC address is `08:00:27:00:00:01`
 
@@ -190,8 +190,8 @@ export MAC=b8:59:9f:e0:f6:8c     # Change this MAC address to your worker node P
 
 Now run `./generate.sh` to create the `hardware.json` file which contains the MAC address and a unique UUID.
 
-3. Login into tink-cli client and push hardware.json and ubuntu.tmpl into tink
-You need copy both hardware.json and ubuntu.tmpl file to tink cli before you can push them into tink
+3. Login into tink-cli client and push hw1.json and ubuntu.tmpl into tink
+You need copy both hw1.json and ubuntu.tmpl file to tink cli before you can push them into tink
 
 3.1 Create hardware
 
@@ -200,7 +200,7 @@ You need copy both hardware.json and ubuntu.tmpl file to tink cli before you can
 docker exec -it deploy_tink-cli_1 sh
 
 # push the hardware information to tink database
-/tmp # tink hardware push --file /tmp/hardware.json
+/tmp # tink hardware push --file /tmp/hw1.json
 ```
 
 ### Create the template and workflow
