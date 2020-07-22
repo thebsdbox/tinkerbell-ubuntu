@@ -14,9 +14,9 @@ metadata=/metadata
 curl --connect-timeout 60 http://$MIRROR_HOST:50061/metadata > $metadata
 check_required_arg "$metadata" 'metadata file' '-M'
 
-declare class && set_from_metadata class 'plan_slug' <"$metadata"
-declare facility && set_from_metadata facility 'facility_code' <"$metadata"
-declare os && set_from_metadata os 'instance.operating_system_version.os_slug' <"$metadata"
+declare class && set_from_metadata class 'metadata.facility.plan_slug' <"$metadata"
+declare facility && set_from_metadata facility 'metadata.facility.facility_code' <"$metadata"
+declare os && set_from_metadata os 'metadata.instance.operating_system_version.os_slug' <"$metadata"
 declare preserve_data && set_from_metadata preserve_data 'preserve_data' false <"$metadata"
 
 # declare pwhash && set_from_metadata pwhash 'password_hash' <"$metadata"
@@ -24,7 +24,7 @@ declare preserve_data && set_from_metadata preserve_data 'preserve_data' false <
 declare pwhash="5f4dcc3b5aa765d61d8327deb882cf99"
 declare state="provisioning"
 
-declare tag && set_from_metadata tag 'instance.operating_system_version.image_tag' <"$metadata" || tag=""
+declare tag && set_from_metadata tag 'metadata.instance.operating_system_version.image_tag' <"$metadata" || tag=""
 #declare tinkerbell && set_from_metadata tinkerbell 'phone_home_url' <"$metadata"
 declare deprovision_fast && set_from_metadata deprovision_fast 'deprovision_fast' false <"$metadata"
 
@@ -63,7 +63,7 @@ cpr_url=$(sed -nr 's|.*\bcpr_url=(\S+).*|\1|p' "$userdata")
 
 if [[ -z ${cpr_url} ]]; then
         echo "Using default image since no cpr_url provided"
-        jq -c '.instance.storage' "$metadata" >$cprconfig
+        jq -c '.metadata.instance.storage' "$metadata" >$cprconfig
 else
         echo "NOTICE: Custom CPR url found!"
         echo "Overriding default CPR location with custom cpr_url"
